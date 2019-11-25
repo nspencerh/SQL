@@ -2,7 +2,6 @@
 SELECT SUBSTRING ('this is a test data' FROM 1 FOR 4); -- SUBSTRING starts in 1 and end in 4
 SELECT SUBSTRING ('this is a test data' FROM 1); -- SUBSTRING starts in 1 until the end
 
-
 ------------------ REPLACE ------------------
 SELECT department,
 REPLACE(department, 'Clothing', 'Attire')  -- Replace the "department" column where
@@ -21,4 +20,25 @@ FROM employees;
 
 ------------------ COALESCE ------------------
 SELECT COALESCE(email, 'NONE') AS email -- replace with the string 'NONE' where NULL is found
+FROM employees;
+
+------------------ UPPER ------------------
+SELECT UPPER(first_name)            -- change the string to uppercase
+FROM employees;
+
+------------------ LOWER ------------------
+SELECT LOWER(first_name)            -- change the string to lowercase
+FROM employees;
+
+------------------ LENGTH ------------------
+SELECT LENGTH(first_name)            -- to get the lenth of the string
+FROM employees;
+
+------------------ TRIM ------------------
+SELECT TRIM('    this is a string   ')   -- takes the spaces off the string
+FROM employees;
+
+------------------ BOOLEAN EXPRESSION ------------------
+-- concatenates the full name and a boolean column 
+SELECT first_name || ' ' || last_name as complete_name, (salary > 140000)
 FROM employees;
