@@ -45,19 +45,28 @@ SUM(salary)
 FROM employees;
 -- The same as OVER(ORDER BY) but now works in a PARTITION (department)
 
+-----------------------  RANK + DENSE_RANK  ------------------------------------
 
-
--- RANK
-SELECT first_name, email, department, salary,
-RANK() OVER(PARTITION BY department ORDER BY salary DESC) AS rank
+SELECT first_name, salary,
+RANK() OVER(ORDER BY salary DESC) AS rank
 FROM employees;
--- Para rankear a los empleados de acuerdo a su salario.
+-- Para rankear a los empleados de acuerdo a su salario. Si 2 empleados ganaran
+-- lo mismo, tienen el mismo ranking y el siguiente, seguira 2 mas adelante
+-- Ej: 1 - John, 1 - Elias, 3 - Peter
+SELECT first_name, salary,
+DENSE_RANK() OVER(ORDER BY salary DESC) AS rank
+FROM employees;
+-- Para rankear a los empleados de acuerdo a su salario. Si 2 empleados ganaran
+-- lo mismo, tienen el mismo ranking y el siguiente, seguira 1 mas adelante
+-- Ej: 1 - John, 1 - Elias, 2 - Peter
 
--- NTILE()
+----------------------------------- NTILE() ------------------------------------
 SELECT first_name, email, department, salary,
 NTILE(5) OVER(PARTITION BY department ORDER BY salary DESC) AS salary_bracket
 FROM employees;
 -- En vez de "rankearlos" los agrupa en "n" groups
+-- Si por ejemplo una partición tiene 32 elementos, si se ejecuta NTILE(5)
+-- Se hacen grupos 7,7,6,6,6 (lo mas parejos posibless)
 
 -- FIRST_VALUE()
 SELECT first_name, email, department, salary,
